@@ -1,5 +1,5 @@
 import express, { Application, Request, Response } from "express";
-const app: Application = express();
+export const app: Application = express();
 import fs from "fs";
 import path from "path";
 
@@ -13,18 +13,10 @@ const userRouter = express.Router();
 app.use("/todos", todosRouter);
 app.use('/users', userRouter)
 
-// New todo router
-todosRouter.get("/todos", (req: Request, res: Response) => {
-  const data = fs.readFileSync(filePath, { encoding: "utf-8" });
-console.log(data)
-  res.json({
-    message: "From todos Router!",
-    data
-  });
-});
 
 
-const filePath = path.join(__dirname, "../db/todo.json");
+
+
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to Todos App!");
@@ -40,13 +32,7 @@ app.get("/todos", (req: Request, res: Response) => {
   });
 });
 
-// CREATE todo
-app.post("/todos/create-todo", (req: Request, res: Response) => {
-  // const data = req.body;
-  // console.log(data)
-  const { title, body } = req.body;
-  res.send("Hello World!");
-});
+
 
 export default app;
 
