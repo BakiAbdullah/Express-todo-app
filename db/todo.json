@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Express",
+    "body": "Learning Express js",
+    "createdAt": "2025-05-01T10:00:00"
+  },
+  {
+    "title": "MongoDB",
+    "body": "Learning MongoDB.",
+    "createdAt": "2025-05-15T14:30:00"
+  },
+  {
+    "title": "Prisma",
+    "body": "Learning prisma!",
+    "createdAt": "2025-05-28T18:45:00"
+  }
+]
