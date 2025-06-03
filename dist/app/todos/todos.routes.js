@@ -26,35 +26,36 @@ exports.todosRouter.get("/", (req, res) => {
     console.log(data);
     res.json({
         message: "From todos Router!",
-        data
+        data,
     });
 });
 // CREATE todo router >>>>>>>>>>>
 exports.todosRouter.post("/create-todo", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { title, decription, priority } = req.body;
     const db = yield mongodb_1.client.db("TodosDB");
     const collection = yield db.collection("todos");
-    collection.insertOne({
-        title: "MongoDB",
-        decription: "A nosql mastery database named MongoDB",
-        priority: "High",
+    yield collection.insertOne({
+        title: title,
+        decription: decription,
+        priority: priority,
         isCompleted: false
     });
-    const todos = collection.find({});
-    // const { title, body } = req.body;
-    res.send("Hello World!");
+    const cursor = collection.find({});
+    const todos = yield cursor.toArray();
+    res.json(todos);
 }));
 // GET single todo by title >>>>>>>>>>>
-exports.todosRouter.get('/:title', (req, res) => {
+exports.todosRouter.get("/:title", (req, res) => {
     const { title, body } = req.body;
     res.send("Hello World!");
 });
 // UPDATE todo by title >>>>>>>>>>>
-exports.todosRouter.put('/update-todo/:title', (req, res) => {
+exports.todosRouter.put("/update-todo/:title", (req, res) => {
     const { title, body } = req.body;
     res.send("Hello World!");
 });
 // DELETE todo by title >>>>>>>>>>>
-exports.todosRouter.delete('/delete-todo/:title', (req, res) => {
+exports.todosRouter.delete("/delete-todo/:title", (req, res) => {
     const { title, body } = req.body;
     res.send("Hello World!");
 });
