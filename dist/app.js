@@ -5,26 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express_1 = __importDefault(require("express"));
+const todos_routes_1 = require("./app/todos/todos.routes");
 exports.app = (0, express_1.default)();
-const fs_1 = __importDefault(require("fs"));
 exports.app.use(express_1.default.json());
-// Making instance of app router
-const todosRouter = express_1.default.Router();
-const userRouter = express_1.default.Router();
 // Services
-exports.app.use("/todos", todosRouter);
-exports.app.use('/users', userRouter);
+exports.app.use("/todos", todos_routes_1.todosRouter);
 exports.app.get("/", (req, res) => {
     res.send("Welcome to Todos App!");
-});
-//& GET all todo
-exports.app.get("/todos", (req, res) => {
-    const data = fs_1.default.readFileSync(filePath, { encoding: "utf-8" });
-    console.log(data);
-    res.json({
-        message: "From todos Router!",
-        data
-    });
 });
 exports.default = exports.app;
 /**

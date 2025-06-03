@@ -2,12 +2,11 @@ import express, { Request, Response } from 'express';
 import fs from "fs"
 import path from 'path';
 
-// new instance from express app
-const todosRouter = express.Router();
+// new instance from express app >>>>>>>>>>>
+export const todosRouter = express.Router();
+const filePath = path.join(__dirname, "../../../db/todo.json");
 
-const filePath = path.join(__dirname, "../db/todo.json");
-
-// New todo router
+// New todo router >>>>>>>>>>>
 todosRouter.get("/", (req: Request, res: Response) => {
   const data = fs.readFileSync(filePath, { encoding: "utf-8" });
 console.log(data)
@@ -17,10 +16,27 @@ console.log(data)
   });
 });
 
-// CREATE todo
+// CREATE todo router >>>>>>>>>>>
 todosRouter.post("/create-todo", (req: Request, res: Response) => {
   // const data = req.body;
-  // console.log(data)
   const { title, body } = req.body;
   res.send("Hello World!");
 });
+
+// GET single todo by title >>>>>>>>>>>
+todosRouter.get('/:title', (req: Request, res: Response) => {
+  const { title, body } = req.body;
+  res.send("Hello World!");
+})
+
+// UPDATE todo by title >>>>>>>>>>>
+todosRouter.put('/update-todo/:title', (req: Request, res: Response) => {
+  const { title, body } = req.body;
+  res.send("Hello World!");
+})
+
+// DELETE todo by title >>>>>>>>>>>
+todosRouter.delete('/delete-todo/:title', (req: Request, res: Response) => {
+  const { title, body } = req.body;
+  res.send("Hello World!");
+})
