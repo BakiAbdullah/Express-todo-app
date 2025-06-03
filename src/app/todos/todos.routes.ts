@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import fs from "fs"
 import path from 'path';
+import { client } from '../../config/mongodb';
 
 // new instance from express app >>>>>>>>>>>
 export const todosRouter = express.Router();
@@ -17,20 +18,22 @@ console.log(data)
 });
 
 // CREATE todo router >>>>>>>>>>>
-todosRouter.post("/create-todo", (req: Request, res: Response) => {
-   const db = await client.db("TodosDB");
-    const collection = await db.collection("todos").insertOne({
-      title: "MongoDB",
-      body: "MongoDB"
-    })
-  
-  // Titile
-  // description
-  // priority : High, med, low
-  // isCompleted: true
+todosRouter.post("/create-todo", async (req: Request, res: Response) => {
+  const db = await client.db("TodosDB");
+  const collection = await db.collection("todos");
 
-  // const data = req.body;
-  const { title, body } = req.body;
+  collection.insertOne({
+     title: "MongoDB",
+     decription: "A nosql mastery database named MongoDB",
+     priority: "High",
+     isCompleted: false
+  })
+  
+  const todos = collection.find({});
+  
+  
+  
+  // const { title, body } = req.body;
   res.send("Hello World!");
 });
 

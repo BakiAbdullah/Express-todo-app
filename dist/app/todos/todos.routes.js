@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -7,6 +16,7 @@ exports.todosRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const mongodb_1 = require("../../config/mongodb");
 // new instance from express app >>>>>>>>>>>
 exports.todosRouter = express_1.default.Router();
 const filePath = path_1.default.join(__dirname, "../../../db/todo.json");
@@ -20,20 +30,19 @@ exports.todosRouter.get("/", (req, res) => {
     });
 });
 // CREATE todo router >>>>>>>>>>>
-exports.todosRouter.post("/create-todo", (req, res) => {
-    const db = yield client.db("TodosDB");
-    const collection = yield db.collection("todos").insertOne({
+exports.todosRouter.post("/create-todo", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const db = yield mongodb_1.client.db("TodosDB");
+    const collection = yield db.collection("todos");
+    collection.insertOne({
         title: "MongoDB",
-        body: "MongoDB"
+        decription: "A nosql mastery database named MongoDB",
+        priority: "High",
+        isCompleted: false
     });
-    // Titile
-    // description
-    // priority : High, med, low
-    // isCompleted: true
-    // const data = req.body;
-    const { title, body } = req.body;
+    const todos = collection.find({});
+    // const { title, body } = req.body;
     res.send("Hello World!");
-});
+}));
 // GET single todo by title >>>>>>>>>>>
 exports.todosRouter.get('/:title', (req, res) => {
     const { title, body } = req.body;
