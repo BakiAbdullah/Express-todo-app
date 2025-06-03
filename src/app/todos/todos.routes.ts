@@ -18,6 +18,17 @@ console.log(data)
 
 // CREATE todo router >>>>>>>>>>>
 todosRouter.post("/create-todo", (req: Request, res: Response) => {
+   const db = await client.db("TodosDB");
+    const collection = await db.collection("todos").insertOne({
+      title: "MongoDB",
+      body: "MongoDB"
+    })
+  
+  // Titile
+  // description
+  // priority : High, med, low
+  // isCompleted: true
+
   // const data = req.body;
   const { title, body } = req.body;
   res.send("Hello World!");

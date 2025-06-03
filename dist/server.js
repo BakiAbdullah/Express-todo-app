@@ -16,7 +16,7 @@ const mongodb_1 = require("mongodb");
 const app_1 = __importDefault(require("./app"));
 let server;
 const port = 5000;
-const uri = "mongodb+srv://bakiabdullah:TIOkDaMUusiQNBYV@cluster0.uqgxsrk.mongodb.net/todosDB?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://bakiabdullah:TIOkDaMUusiQNBYV@cluster0.uqgxsrk.mongodb.net/TodosDB?retryWrites=true&w=majority&appName=Cluster0";
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new mongodb_1.MongoClient(uri, {
     serverApi: {
@@ -30,6 +30,12 @@ const bootstrap = () => __awaiter(void 0, void 0, void 0, function* () {
     // Connect the client to the server	(optional starting in v4.7)
     yield client.connect();
     console.log("Connected to MongoDB!");
+    const db = yield client.db("TodosDB");
+    const collection = yield db.collection("todos").insertOne({
+        title: "MongoDB",
+        body: "MongoDB"
+    });
+    console.log(collection, "collection");
     server = app_1.default.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
         console.log(`Todo app listening on port ${port}`);
     }));

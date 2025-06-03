@@ -21,6 +21,15 @@ exports.todosRouter.get("/", (req, res) => {
 });
 // CREATE todo router >>>>>>>>>>>
 exports.todosRouter.post("/create-todo", (req, res) => {
+    const db = yield client.db("TodosDB");
+    const collection = yield db.collection("todos").insertOne({
+        title: "MongoDB",
+        body: "MongoDB"
+    });
+    // Titile
+    // description
+    // priority : High, med, low
+    // isCompleted: true
     // const data = req.body;
     const { title, body } = req.body;
     res.send("Hello World!");
